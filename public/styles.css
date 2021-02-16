@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: monospace;
+    padding: 2px;
+}
+
+body {
+    background-color: #0a263b;
+}
+
+#petitionBody {
+    color: #87c341;
+    display: inline-block;
+}
+
+canvas {
+    border: 2px solid black;
+}

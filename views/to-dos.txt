@@ -1,0 +1,5 @@
+Part1 pending:
+- complete route for POST, /signers
+- complete thanks, signers templates
+- complete SELECT total number of signers query (COUNT)
+- client-side script (canvas), styles, images, etc.
