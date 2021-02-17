@@ -1,2 +1,11 @@
-<div>This is a test for the thanks handlebar</div>
-<br>
+<div id="thanksBody">
+    <h1>Thanks a million for your signature, you are awesome!</h1>
+    <br>
+    {{#signRows}}
+    <img id="signatureAdded" src="{{signature}}" alt="">
+    <br>
+    {{/signRows}}
+    {{#totalRows}}
+    <a href="/signers"><h2>Click to know the {{count}} awesome people who came forward</h2></a>
+    {{/totalRows}}
+</div>

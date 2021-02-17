@@ -1,5 +1,16 @@
 Part1 pending:
-- complete route for POST, /signers
-- complete thanks, signers templates
-- complete SELECT total number of signers query (COUNT)
-- client-side script (canvas), styles, images, etc.
+X - complete route for POST, /signers
+X - complete thanks, signers templates
+X - complete SELECT total number of signers query (COUNT)
+X - client-side script (canvas)
+- client-side styles, images, etc.
+
+Part2 pending (notes by Merle): 
+X - add sign to thanks page
+X - add cookie-session 
+
+CSRF
+- step-by-step in notes
+- for forms with hidden input element -> petition, later also for login
+- can do after part5 but before going online!
+

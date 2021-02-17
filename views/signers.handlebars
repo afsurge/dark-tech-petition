@@ -1,2 +1,9 @@
-<div>This is a test for the signers handlebar</div>
-<br>
+<div id="signersBody">
+    <h1>The following awesome people demand that the eating of "Doner Kebab" in public transport be prohibited by all nations.</h1>
+    <br>
+    <div id="allSigners">
+        {{#rows}}
+            <h2>{{first}} {{last}}</h2>
+        {{/rows}}
+    </div>
+</div>
