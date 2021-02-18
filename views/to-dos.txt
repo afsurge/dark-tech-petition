@@ -14,3 +14,13 @@ CSRF
 - for forms with hidden input element -> petition, later also for login
 - can do after part5 but before going online!
 
+Part3 pending (notes by Oli):
+- database tables
+    X - new table and update signatures table
+    X - update queries and funcs used before acc. to updated signatures
+    X - remove input fields from petition
+    - update addSignature query with joining id and user_id + POST /petition route
+X - handlebars for register and login
+X - routes for get and post of new handlebars above
+X - bcrypt bc.js file for hashing and comparing passwords
+

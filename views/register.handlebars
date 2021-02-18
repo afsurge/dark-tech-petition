@@ -1,0 +1,25 @@
+<div id="registerBody">
+    <h1>Join our movement to make the eating of "Doner Kebab" in public transport a major crime!</h1>
+    <img src="#" alt="">
+    <form method="POST">
+        {{#if error}}
+        <h3 id="errorMsg">{{errorMsg}}</h3>
+        {{/if}}
+        <p>first name</p>
+        <input type="text" name="first">
+        <p>last name</p>
+        <input type="text" name="last">
+         <p>email</p>
+        <input type="text" name="email">
+        <p>password</p>
+        <input type="password" name="password">
+        <br>
+        <br>
+        {{!-- <input id="forDataUrl" type="hidden" name="sign" value="">
+        <br> --}}
+        <button id="signUp">JOIN US!</button>
+    </form>
+    <br>
+    <h2>Already a member? <a href="/login">Log in</a>.</h2>
+    {{!-- <script src="script.js"></script> --}}
+</div>

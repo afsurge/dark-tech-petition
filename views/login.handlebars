@@ -1,0 +1,19 @@
+<div id="loginBody">
+    <img src="#" alt="">
+    <h1>Please log in</h1>
+    <form method="POST">
+        {{#if error}}
+        <h3 id="errorMsg">{{errorMsg}}</h3>
+        {{/if}}
+         <p>email</p>
+        <input type="text" name="email">
+        <p>password</p>
+        <input type="password" name="password">
+        <br>
+        <br>
+        {{!-- <input id="forDataUrl" type="hidden" name="sign" value="">
+        <br> --}}
+        <button id="login">LOGIN</button>
+    </form>
+    {{!-- <script src="script.js"></script> --}}
+</div>
