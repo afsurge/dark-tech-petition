@@ -2,7 +2,7 @@ const spicedPg = require("spiced-pg");
 
 const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
 
-// have to include user_id from users table (?)
+// have to include user_id from cookie
 module.exports.addSignature = (user_id, sign) => {
     const q = `
         INSERT INTO signatures (user_id, signature) 

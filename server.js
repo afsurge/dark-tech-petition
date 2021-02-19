@@ -26,7 +26,11 @@ app.use(express.static("./public"));
 app.use((req, res, next) => {
     if (req.session.userId) {
         if (req.session.signatureId) {
-            if (req.url == "/petition") {
+            if (
+                req.url == "/petition" ||
+                req.url == "/register" ||
+                req.url == "/login"
+            ) {
                 res.redirect("/thanks");
             } else {
                 return next();
@@ -136,9 +140,7 @@ app.post("/petition", (req, res) => {
     const { sign } = req.body;
     // console.log(req.body);
 
-    // below method of passing user_id value to addSignature from req.session.userId
-    // ERROR: insert or update on table "signatures" violates foreign key constraint "signatures_user_id_fkey"
-    // const user_id = req.session.userId;
+    const user_id = req.session.userId;
     // console.log(user_id);
     db.addSignature(user_id, sign)
         .then(({ rows }) => {

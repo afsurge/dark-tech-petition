@@ -2,16 +2,16 @@
     box-sizing: border-box;
     margin: 0;
     font-family: monospace;
-    padding: 2px;
+    /* padding: 2px; */
 }
 
 body {
-    background-color: #9bc56b;
+    background-color: dimgray;
 }
 
 div#navbar {
     height: 50px;
-    background-color: #0d664b;
+    background-color: black;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -22,7 +22,7 @@ div#navbar {
 }
 
 h1 {
-    color: #0d664b;
+    color: navy;
 }
 
 h3 {
@@ -36,6 +36,7 @@ h3 {
 button {
     width: 500px;
     background-color: #1da1f2;
+    border: 2px solid skyblue;
 }
 
 canvas {
