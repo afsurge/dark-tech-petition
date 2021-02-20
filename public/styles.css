@@ -7,14 +7,27 @@
 
 body {
     background-color: dimgray;
+    /* background-image: url("./images/the-social-dilemma-2020.jpeg"); */
+    /* background-size: 200vh 50vw; */
 }
 
 div#navbar {
-    height: 50px;
+    height: 60px;
     background-color: black;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.navbuttons {
+    color: #1da1f2;
+    height: 100%;
+    width: 115px;
+    text-decoration: none;
+    border: 1px solid gray;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 20px 10px;
 }
 
 #petitionBody {

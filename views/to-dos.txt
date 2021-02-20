@@ -1,31 +1,43 @@
-Part1 pending:
-X - complete route for POST, /signers
-X - complete thanks, signers templates
-X - complete SELECT total number of signers query (COUNT)
-X - client-side script (canvas)
-- client-side styles, images, etc.
+Part1 DONE:
+    X - complete route for POST, /signers
+    X - complete thanks, signers templates
+    X - complete SELECT total number of signers query (COUNT)
+    X - client-side script (canvas)
 
-Part2 pending (notes by Merle): 
-X - add sign to thanks page
-X - add cookie-session 
+Part2 DONE (notes by Merle): 
+    X - add sign to thanks page
+    X - add cookie-session 
 
-CSRF
-- step-by-step in notes
-- for forms with hidden input element -> petition, later also for login
-- can do after part5 but before going online!
+CSRF pending:
+    - step-by-step in notes
+    - for forms with hidden input element -> petition, later also for login
+    - can do after part5 but before going online!
 
-Part3 pending (notes by Oli):
-X - database tables
-    X - new table and update signatures table
-    X - update queries and funcs used before acc. to updated signatures
-    X - remove input fields from petition
-    X - update addSignature query user_id + POST /petition route
-    X - error with using created_at
-X - handlebars for register and login
-X - routes for get and post of new handlebars above
-X - bcrypt bc.js file for hashing and comparing passwords
+Part3 DONE (notes by Oli):
+    X - database tables
+        X - new table and update signatures table
+        X - update queries and funcs used before acc. to updated signatures
+        X - remove input fields from petition
+        X - update addSignature query user_id + POST /petition route
+        X - error with using created_at
+    X - handlebars for register and login
+    X - routes for get and post of new handlebars above
+    X - bcrypt bc.js file for hashing and comparing passwords
+
+Part4 pending:
+    X - /profile page -> get and post routes ->redirect after register
+    X - change /signers templates -> get signers route
+    X - add signers by city
+    X - user_profiles table with user_id foreign key
+    X - new queries -> insert profile, select signers, select signers by city
+    X - check signature at login to decide next -> /petition or /thanks
+    - error with adding no age -> "" is invalid as INT -> maybe check and pass null?
+
 
 MISC:
-- fix signature style and quality in thanks -> script and styles
+    - CSRF
+    - client-side styles, images, etc.
+    - fix signature style and quality in /thanks -> script and styles
 
-
+Questions!
+- When do we clear the userId cookie? Logout?

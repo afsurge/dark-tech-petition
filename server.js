@@ -1,7 +1,6 @@
 const express = require("express");
 const exhbars = require("express-handlebars");
 const app = express();
-// const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const { hash, compare } = require("./utils/bc.js");
@@ -13,7 +12,7 @@ app.set("view engine", "handlebars");
 
 // middlewares
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
+
 app.use(
     cookieSession({
         secret: `I love to eat.`,
@@ -36,14 +35,18 @@ app.use((req, res, next) => {
                 return next();
             }
         } else {
-            if (req.url != "/petition") {
+            if (req.url != "/petition" && req.url != "/profile") {
                 res.redirect("/petition");
             } else {
                 return next();
             }
         }
     } else {
-        if (req.url == "/register" || req.url == "/login") {
+        if (
+            req.url == "/register" ||
+            req.url == "/login" ||
+            req.url == "/profile"
+        ) {
             return next();
         } else {
             res.redirect("/register");
@@ -69,7 +72,7 @@ app.post("/register", (req, res) => {
             db.addUser(first, last, email, hashedpass)
                 .then(({ rows }) => {
                     req.session.userId = rows[0].id;
-                    res.redirect("/petition");
+                    res.redirect("/profile");
                 })
                 .catch((err) => {
                     console.log("Error:", err.message);
@@ -83,6 +86,26 @@ app.post("/register", (req, res) => {
         .catch((err) => {
             console.log("Error:", err.message);
         });
+});
+
+app.get("/profile", (req, res) => {
+    res.render("profile", {
+        layout: "main",
+    });
+});
+
+app.post("/profile", (req, res) => {
+    let { age, city, url } = req.body;
+    if (!url.startsWith("https://") && !url.startsWith("http://")) {
+        url = "https://" + url;
+    }
+    if (age == "") {
+        age = null;
+    }
+    const user_id = req.session.userId;
+    db.addProfile(age, city, url, user_id)
+        .then(() => res.redirect("/petition"))
+        .catch((err) => console.log("Error:", err.message));
 });
 
 app.get("/login", (req, res) => {
@@ -104,12 +127,20 @@ app.post("/login", (req, res) => {
 
     db.getUser(email)
         .then(({ rows }) => {
+            // console.log(rows);
             const hashpass = rows[0].hashpass;
             const id = rows[0].id;
             compare(password, hashpass).then((match) => {
                 if (match) {
                     req.session.userId = id;
-                    res.redirect("/petition");
+                    // if signature is null for joined table -> go to petition
+                    if (rows[0].signature == null) {
+                        res.redirect("/petition");
+                    } else {
+                        // if signature is present for logged in user -> set sign cookie, redirect to /thanks
+                        req.session.signatureId = rows[0].sign_id;
+                        res.redirect("/thanks");
+                    }
                 } else {
                     return res.render("login", {
                         layout: "main",
@@ -183,12 +214,27 @@ app.get("/thanks", (req, res) => {
 
 app.get("/signers", (req, res) => {
     // get list of signers and forward to template
-    db.getNames()
+    db.getSigners()
         .then(({ rows }) => {
             // console.log(rows);
             res.render("signers", {
                 layout: "main",
                 rows,
+            });
+        })
+        .catch((err) => console.log("Error:", err.message));
+});
+
+app.get("/signers/:city", (req, res) => {
+    // console.log(req.params);
+    const city = req.params.city;
+    db.getSignersByCity(city)
+        .then(({ rows }) => {
+            res.render("signers", {
+                layout: "main",
+                rows,
+                selectedCity: true,
+                city: city,
             });
         })
         .catch((err) => console.log("Error:", err.message));
