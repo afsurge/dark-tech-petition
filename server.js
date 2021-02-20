@@ -4,6 +4,7 @@ const app = express();
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const { hash, compare } = require("./utils/bc.js");
+const csurf = require("csurf");
 
 // handlebars setup
 app.engine("handlebars", exhbars());
@@ -19,6 +20,13 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 );
+
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 
 app.use(express.static("./public"));
 

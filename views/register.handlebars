@@ -14,10 +14,11 @@
         <input type="text" name="email">
         <p>password</p>
         <input type="password" name="password">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <br>
         <br>
         <button id="signUp">JOIN US!</button>
     </form>
     <br>
-    <h2>Already with us? <a href="/login">Log in</a>.</h2>
+    <h2>Already registered with us? <a href="/login">Log in</a>.</h2>
 </div>

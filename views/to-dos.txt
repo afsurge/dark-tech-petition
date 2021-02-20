@@ -8,9 +8,9 @@ Part2 DONE (notes by Merle):
     X - add sign to thanks page
     X - add cookie-session 
 
-CSRF pending:
+CSRF DONE:
     - step-by-step in notes
-    - for forms with hidden input element -> petition, later also for login
+    - for forms with POST input element -> petition, later also for login and others
     - can do after part5 but before going online!
 
 Part3 DONE (notes by Oli):
@@ -35,7 +35,7 @@ Part4 pending:
 
 
 MISC:
-    - CSRF
+    X - CSRF
     - client-side styles, images, etc.
     - fix signature style and quality in /thanks -> script and styles
 
