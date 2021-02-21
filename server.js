@@ -87,7 +87,8 @@ app.post("/register", (req, res) => {
                     res.render("register", {
                         layout: "main",
                         error: true,
-                        errorMsg: "We didn't get everything, please try again.",
+                        errorMsg:
+                            "ERROR: We didn't get everything, please try again.",
                     });
                 });
         })
@@ -129,7 +130,7 @@ app.post("/login", (req, res) => {
         return res.render("login", {
             layout: "main",
             error: true,
-            errorMsg: "Please provide both EMAIL and PASSWORD.",
+            errorMsg: "ERROR: Please provide both EMAIL and PASSWORD.",
         });
     }
 

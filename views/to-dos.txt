@@ -36,8 +36,8 @@ Part4 pending:
 
 MISC:
     X - CSRF
+    X - fix signature style and quality in /thanks -> script and styles
     - client-side styles, images, etc.
-    - fix signature style and quality in /thanks -> script and styles
 
 Questions!
 - When do we clear the userId cookie? Logout?

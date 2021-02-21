@@ -33,8 +33,8 @@ signCanvas.addEventListener("mouseup", (e) => {
 
 function drawSign(context, x, y, offX, offY) {
     context.beginPath();
-    context.strokestyle = "black";
-    context.linewidth = 1;
+    context.strokeStyle = "red";
+    context.lineWidth = 2;
     context.moveTo(x, y);
     context.lineTo(offX, offY);
     context.stroke();

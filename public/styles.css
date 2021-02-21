@@ -7,39 +7,70 @@
 
 body {
     background-color: dimgray;
-    /* background-image: url("./images/the-social-dilemma-2020.jpeg"); */
-    /* background-size: 200vh 50vw; */
+}
+
+#container {
+    display: flex;
+    height: 90vh;
 }
 
 div#navbar {
     height: 60px;
-    background-color: black;
+    background-color: #292929;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
 .navbuttons {
-    color: #1da1f2;
+    color: whitesmoke;
     height: 100%;
-    width: 115px;
     text-decoration: none;
-    border: 1px solid gray;
     text-align: center;
     font-size: 1.2em;
-    padding: 20px 10px;
+    padding: 20px 20px;
 }
 
-#petitionBody {
-    display: inline-block;
+.pageBody,
+.pageBanner {
+    width: 50%;
+}
+
+.pageBody {
+    padding: 50px;
+}
+
+.pageBanner {
+    background-image: url("./images/register.jpeg");
+    background-size: cover;
+}
+
+.petitionBanner {
+    width: 50%;
+    background-image: url("./images/petition2.jpg");
+    background-size: cover;
 }
 
 h1 {
-    color: navy;
+    color: #e33b38;
+    font-size: 3em;
+}
+
+h2 {
+    color: #292929;
+    font-size: 2em;
+}
+
+#petitionMsg {
+    background-color: #292929;
+    color: whitesmoke;
+    text-align: center;
+    padding: 20px;
+    border: 5px solid black;
 }
 
 h3 {
-    color: rgb(196, 0, 0);
+    color: whitesmoke;
 }
 
 /* input {
@@ -47,18 +78,18 @@ h3 {
 } */
 
 button {
-    width: 500px;
-    background-color: #1da1f2;
-    border: 2px solid skyblue;
+    color: whitesmoke;
+    width: 50%;
+    background-color: #e33b38;
+    border: 2px solid #e33b38;
 }
 
 canvas {
-    border: 2px solid black;
+    border: 1px solid whitesmoke;
 }
 
 #signatureAdded {
     width: 500px;
     height: 100px;
-    border: 5px solid black;
-    background-color: white;
+    background-color: dimgray;
 }

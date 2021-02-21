@@ -1,18 +1,24 @@
-<div id="loginBody">
-    <img src="#" alt="">
-    <h1>Please login</h1>
+<div class="pageBody">
+    <h1>RISE AGAINST THE DARK TECHNOLOGY</h1>
+    <br>
+    <h2>Please login</h2>
     <br>
     <form method="POST">
-        {{#if error}}
-        <h3 id="errorMsg">{{errorMsg}}</h3>
-        {{/if}}
         <p>email</p>
         <input type="text" name="email">
+        <br>
+        <br>
         <p>password</p>
         <input type="password" name="password">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <br>
         <br>
+        <br>
+        {{#if error}}
+        <h3 id="errorMsg">{{errorMsg}}</h3>
+        <br>
+        {{/if}}
         <button id="login">LOGIN</button>
     </form>
 </div>
+<div class="pageBanner"></div>
