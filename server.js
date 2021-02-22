@@ -30,37 +30,37 @@ app.use(function (req, res, next) {
 
 app.use(express.static("./public"));
 
-app.use((req, res, next) => {
-    if (req.session.userId) {
-        if (req.session.signatureId) {
-            if (
-                req.url == "/petition" ||
-                req.url == "/register" ||
-                req.url == "/login"
-            ) {
-                res.redirect("/thanks");
-            } else {
-                return next();
-            }
-        } else {
-            if (req.url != "/petition" && req.url != "/profile") {
-                res.redirect("/petition");
-            } else {
-                return next();
-            }
-        }
-    } else {
-        if (
-            req.url == "/register" ||
-            req.url == "/login" ||
-            req.url == "/profile"
-        ) {
-            return next();
-        } else {
-            res.redirect("/register");
-        }
-    }
-});
+// app.use((req, res, next) => {
+//     if (req.session.userId) {
+//         if (req.session.signatureId) {
+//             if (
+//                 req.url == "/petition" ||
+//                 req.url == "/register" ||
+//                 req.url == "/login"
+//             ) {
+//                 res.redirect("/thanks");
+//             } else {
+//                 return next();
+//             }
+//         } else {
+//             if (req.url != "/petition" && req.url != "/profile") {
+//                 res.redirect("/petition");
+//             } else {
+//                 return next();
+//             }
+//         }
+//     } else {
+//         if (
+//             req.url == "/register" ||
+//             req.url == "/login" ||
+//             req.url == "/profile"
+//         ) {
+//             return next();
+//         } else {
+//             res.redirect("/register");
+//         }
+//     }
+// });
 
 // routes
 app.get("/", (req, res) => {
@@ -108,9 +108,9 @@ app.post("/profile", (req, res) => {
     if (!url.startsWith("https://") && !url.startsWith("http://")) {
         url = "https://" + url;
     }
-    if (age == "") {
-        age = null;
-    }
+    // if (age == "") {
+    //     age = null;
+    // }
     const user_id = req.session.userId;
     db.addProfile(age, city, url, user_id)
         .then(() => res.redirect("/petition"))
@@ -221,6 +221,16 @@ app.get("/thanks", (req, res) => {
         .catch((err) => console.log("Error:", err.message));
 });
 
+// delete signature
+app.post("/thanks", (req, res) => {
+    db.deleteSign(req.session.userId)
+        .then(() => {
+            req.session.signatureId = null;
+            res.redirect("/petition");
+        })
+        .catch((err) => console.log("Error:", err.message));
+});
+
 app.get("/signers", (req, res) => {
     // get list of signers and forward to template
     db.getSigners()
@@ -250,7 +260,7 @@ app.get("/signers/:city", (req, res) => {
 });
 
 app.get("/edit", (req, res) => {
-    db.editProfile(req.session.userId)
+    db.getProfile(req.session.userId)
         .then(({ rows }) => {
             res.render("edit", {
                 layout: "main",
@@ -262,7 +272,56 @@ app.get("/edit", (req, res) => {
         });
 });
 
-// listen locally and in production
+app.post("/edit", (req, res) => {
+    const { first, last, email, password, age, city, url } = req.body;
+
+    // re-render /edit from catch when an error occurs due to empty first/last/email
+
+    if (password) {
+        hash(password)
+            .then((hashedpass) => {
+                db.updateUserWithPass(
+                    first,
+                    last,
+                    email,
+                    hashedpass,
+                    req.session.userId
+                )
+                    .then(() => {
+                        db.upsertProfile(
+                            age,
+                            city,
+                            url,
+                            req.session.userId
+                        ).then(() => {
+                            res.redirect("/petition");
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("Error at with pass upsert:", err.message);
+                    });
+            })
+            .catch((err) => {
+                console.log("Error at update user:", err.message);
+            });
+    } else {
+        db.updateUserNoPass(first, last, email, req.session.userId)
+            .then(() => {
+                db.upsertProfile(age, city, url, req.session.userId)
+                    .then(() => {
+                        res.redirect("/petition");
+                    })
+                    .catch((err) => {
+                        console.log("Error at no pass upsert:", err.message);
+                    });
+            })
+            .catch((err) => {
+                console.log("Error at update user:", err.message);
+            });
+    }
+});
+
+// listen locally or in production
 app.listen(process.env.PORT || 8080, () =>
     console.log("🛑 Petition server is running...")
 );

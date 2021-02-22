@@ -1,11 +1,21 @@
-<div id="thanksBody">
-    <h1>Thanks a million for your signature, you are awesome!</h1>
+<div class="pageBody">
+    <h1>Many thanks for your signature and support, you are awesome!</h1>
     <br>
     {{#signRows}}
     <img id="signatureAdded" src="{{signature}}" alt="">
     <br>
     {{/signRows}}
     {{#totalRows}}
-    <h2>Know about the courageous group of {{count}} <a href="/signers">here</a></h2>
+    <h2>Know about the valiant group of {{count}} <a href="/signers">here</a></h2>
     {{/totalRows}}
+    <br>
+    <br>
+    <a id="editButton" href="/edit">EDIT PROFILE</a>
+    <br>
+    <br>
+    <form method="POST">
+        <button id="delSign">DELETE SIGNATURE</button>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </form>
 </div>
+<div class="petitionBanner"></div>

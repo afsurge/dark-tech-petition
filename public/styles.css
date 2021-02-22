@@ -61,6 +61,10 @@ h2 {
     font-size: 2em;
 }
 
+h3 {
+    font-size: 1.5em;
+}
+
 #petitionMsg {
     background-color: #292929;
     color: whitesmoke;
@@ -72,10 +76,6 @@ h2 {
 h3 {
     color: whitesmoke;
 }
-
-/* input {
-    background-color: #8091a8;
-} */
 
 button {
     color: whitesmoke;
@@ -107,4 +107,15 @@ input {
     padding: 0px;
     background-color: dimgray;
     border: 2px solid whitesmoke;
+}
+
+#editButton {
+    color: whitesmoke;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.5em;
+    background-color: #e33b38;
+    border: 2px solid #e33b38;
+    padding: 0px 142px;
 }

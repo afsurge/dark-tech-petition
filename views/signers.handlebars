@@ -1,18 +1,21 @@
-<div id="signersBody">
+<div class="pageBody">
     {{#if selectedCity}}
-    <h1>The following awesome people from "{{city}}" came forward against the exploitation of social media.</h1>
+    <h1>The following people from "{{city}}" stands together against the exploitations of social media.</h1>
     {{else}}
-    <h1>The following awesome people came forward to battle against the exploitation of social media.</h1>
+    <h1>The following people stands together against the exploitations of social media.</h1>
     {{/if}}
     <br>
     <div id="allSigners">
         {{#rows}}
             {{#if ../selectedCity}}
-            <h2>✔️ {{first}} {{last}} | {{age}} </h2>
+            <h3>✔️ {{first}} {{last}} | {{age}} </h3>
+            <br>
             {{else if url}}
-            <h2>✔️ <a href="{{url}}" target="_blank">{{first}} {{last}}</a> | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h2>
+            <h3>✔️ <a href="{{url}}" target="_blank">{{first}} {{last}}</a> | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
+            <br>
             {{else}}
-            <h2>✔️ {{first}} {{last}} | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h2>
+            <h3>✔️ {{first}} {{last}} | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
+            <br>
             {{/if}}
         {{/rows}}
     </div>

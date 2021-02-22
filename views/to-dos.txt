@@ -24,26 +24,32 @@ Part3 DONE (notes by Oli):
     X - routes for get and post of new handlebars above
     X - bcrypt bc.js file for hashing and comparing passwords
 
-Part4 pending:
+Part4 DONE:
     X - /profile page -> get and post routes ->redirect after register
     X - change /signers templates -> get signers route
     X - add signers by city
     X - user_profiles table with user_id foreign key
     X - new queries -> insert profile, select signers, select signers by city
     X - check signature at login to decide next -> /petition or /thanks
-    - error with adding no age -> "" is invalid as INT -> maybe check and pass null?
+    X - error with adding no age -> "" is invalid as INT -> maybe check and pass null? -> Andrea tip
 
 Part5 pending (notes by Andrea):
-    - Edit user profile and delete signature
-    - GET for /edit -> new edit template -> retrieve and displate current info + csrf
-    - POST for /edit -> 2 new queries -> with or without new password
-    - Delete signature -> update sign cookie -> redirect /petition
+    X - Edit user profile and delete signature
+    X - GET for /edit -> new edit template -> retrieve and displate current info + csrf
+    X - POST for /edit -> 2 new queries -> with or without new password
+    X - Delete signature -> update sign cookie -> redirect /petition
+    X - link to /edit
+    - check user updates with empty first, last, email -> Merle tip
 
 
 MISC:
     X - CSRF
     X - fix signature style and quality in /thanks -> script and styles
     - client-side styles, images, etc.
+    - finalise text on all pages
+    - logout
+    - new user with already registered email should not be added -> catch error?
+    - add footer
 
 Questions!
 - When do we clear the userId cookie? Logout?
