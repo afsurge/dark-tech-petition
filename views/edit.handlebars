@@ -1,0 +1,40 @@
+<div class="pageBody">
+    <h2>Edit your profile</h2>
+    <br>
+    {{#rows}}
+    <form method="POST">
+        <p>first name</p>
+        <input type="text" name="first" value="{{first}}">
+        <br>
+        <br>
+        <p>last name</p>
+        <input type="text" name="last" value="{{last}}">
+        <br>
+        <br>
+        <p>email</p>
+        <input type="text" name="email" value="{{email}}">
+        <br>
+        <br>
+        <p>password</p>
+        <input type="password" name="password">
+        <br>
+        <br>
+        <p>age</p>
+        <input type="text" name="age" value="{{age}}">
+        <br>
+        <br>
+        <p>city</p>
+        <input type="text" name="city" value="{{city}}">
+        <br>
+        <br>
+        <p>homepage</p>
+        <input type="text" name="url" value="{{url}}">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <br>
+        <br>
+        <br>
+        <button id="udpateProfile">UPDATE</button>
+    </form>
+    {{/rows}}
+</div>
+<div class="pageBanner"></div>

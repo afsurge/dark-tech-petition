@@ -1,6 +1,10 @@
 const spicedPg = require("spiced-pg");
 
-const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
+// connect database locally or in production
+const db = spicedPg(
+    process.env.DATABASE_URL ||
+        "postgres:postgres:postgres@localhost:5432/petition"
+);
 
 // have to include user_id from cookie
 module.exports.addSignature = (user_id, sign) => {
@@ -85,5 +89,17 @@ module.exports.addProfile = (age, city, url, user_id) => {
         VALUES ($1, $2, $3, $4)
     `;
     const params = [age, city, url, user_id];
+    return db.query(q, params);
+};
+
+module.exports.editProfile = (id) => {
+    const q = `
+    SELECT users.id, users.first, users.last, users.email, user_profiles.age, user_profiles.city, user_profiles.url
+    FROM users
+    LEFT JOIN user_profiles
+    On users.id = user_profiles.user_id
+    WHERE users.id = $1
+    `;
+    const params = [id];
     return db.query(q, params);
 };

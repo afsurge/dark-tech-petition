@@ -33,6 +33,12 @@ Part4 pending:
     X - check signature at login to decide next -> /petition or /thanks
     - error with adding no age -> "" is invalid as INT -> maybe check and pass null?
 
+Part5 pending (notes by Andrea):
+    - Edit user profile and delete signature
+    - GET for /edit -> new edit template -> retrieve and displate current info + csrf
+    - POST for /edit -> 2 new queries -> with or without new password
+    - Delete signature -> update sign cookie -> redirect /petition
+
 
 MISC:
     X - CSRF

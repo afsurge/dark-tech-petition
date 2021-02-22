@@ -249,5 +249,20 @@ app.get("/signers/:city", (req, res) => {
         .catch((err) => console.log("Error:", err.message));
 });
 
-// listen
-app.listen(8080, () => console.log("🛑 Petition server is running..."));
+app.get("/edit", (req, res) => {
+    db.editProfile(req.session.userId)
+        .then(({ rows }) => {
+            res.render("edit", {
+                layout: "main",
+                rows,
+            });
+        })
+        .catch((err) => {
+            console.log("Error:", err.message);
+        });
+});
+
+// listen locally and in production
+app.listen(process.env.PORT || 8080, () =>
+    console.log("🛑 Petition server is running...")
+);
