@@ -5,6 +5,12 @@ let y = 0;
 const signCanvas = document.getElementById("signCanvas");
 const inputDataUrl = document.getElementById("forDataUrl");
 const context = signCanvas.getContext("2d");
+const clear = document.getElementById("clearSign");
+
+// clear button for signature on petition page
+clear.onclick = (e) => {
+    signCanvas.value = "";
+};
 
 signCanvas.addEventListener("mousedown", (e) => {
     x = e.offsetX;

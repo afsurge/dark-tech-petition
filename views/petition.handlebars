@@ -1,9 +1,9 @@
 <div class="pageBody">
     <h1>RISE AGAINST THE DARK TECHNOLOGY</h1>
     <br>
-    <h2 id="petitionMsg">Stand with us to implement the ban on social media exploitations and demand an immediate halt of the misuse</h2>
+    <h2 id="petitionMsg">Stand with us to implement the ban on social media exploitations and demand immediate stop to the misuse</h2>
     <br>
-    <form method="POST">
+    <form class="allForms" method="POST">
         {{#if error}}
         <h3 id="errorMsg">{{errorMsg}}</h3>
         {{/if}}
@@ -13,8 +13,13 @@
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <br>
         <br>
-        <button id="submitSign">LET'S DO IT!</button>
+        <button class="allButtons" id="submitSign">LET'S DO IT!</button>
     </form>
+    <form class="allForms" action="">
+    <br>
+    <button class="allButtons" id="clearSign">CLEAR</button>
+    </form>
+    
 </div>
 <div class="petitionBanner"></div>
 <script src="script.js"></script>

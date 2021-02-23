@@ -11,7 +11,7 @@ body {
 
 #container {
     display: flex;
-    height: 90vh;
+    height: 91vh;
 }
 
 div#navbar {
@@ -31,23 +31,28 @@ div#navbar {
     padding: 20px 20px;
 }
 
-.pageBody,
-.pageBanner {
-    width: 50%;
-}
-
 .pageBody {
+    display: flex;
+    flex-direction: column;
     padding: 50px;
+    width: 50%;
 }
 
 .pageBanner {
     background-image: url("./images/register.jpeg");
     background-size: cover;
+    width: 50%;
 }
 
 .petitionBanner {
     width: 50%;
     background-image: url("./images/petition2.jpg");
+    background-size: cover;
+}
+
+.signersBanner {
+    width: 50%;
+    /* background-image: url("./images/solidarity1.jpg"); */
     background-size: cover;
 }
 
@@ -66,11 +71,13 @@ h3 {
 }
 
 #petitionMsg {
+    align-self: center;
     background-color: #292929;
     color: whitesmoke;
     text-align: center;
     padding: 20px;
     border: 5px solid black;
+    width: 80%;
 }
 
 h3 {
@@ -78,10 +85,11 @@ h3 {
 }
 
 button {
+    height: 5vh;
     color: whitesmoke;
     width: 50%;
     background-color: #e33b38;
-    border: 2px solid #e33b38;
+    border: 1px solid #e33b38;
     font-size: 1.5em;
 }
 
@@ -98,7 +106,7 @@ canvas {
 p {
     font-size: 1.2em;
     display: inline-block;
-    width: 6vw;
+    width: 50%;
     border: 2px solid black;
 }
 
@@ -109,13 +117,59 @@ input {
     border: 2px solid whitesmoke;
 }
 
-#editButton {
+footer {
+    display: inline-block;
+    width: 100%;
+    background-color: #292929;
     color: whitesmoke;
-    width: 100px;
-    text-align: center;
+    height: 3vh;
+}
+
+p.footer {
+    padding: 5px 0px;
+    font-size: 1.2em;
+    border: none;
+    width: 49.5%;
+}
+
+#footerQuote {
+    color: #e33b38;
+    font-style: italic;
+    text-align: right;
+}
+
+#signCanvas {
+    align-self: center;
+    width: 500px;
+    height: 100px;
+}
+
+.allForms {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
-    font-size: 1.5em;
-    background-color: #e33b38;
-    border: 2px solid #e33b38;
-    padding: 0px 142px;
+}
+
+.otherForms {
+    width: 50%;
+    align-self: center;
+}
+
+.allButtons,
+img {
+    align-self: center;
+}
+
+.otherButtons {
+    width: 100%;
+}
+
+#iconDiv,
+#icon {
+    flex-grow: 2;
+    height: 100%;
+}
+
+#allSigners {
+    text-transform: uppercase;
 }

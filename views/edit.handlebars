@@ -1,7 +1,7 @@
 <div class="pageBody">
     <h2>Edit your profile</h2>
     <br>
-    <form method="POST">
+    <form class="otherForms" method="POST">
         {{#rows}}
         <p>first name</p>
         <input type="text" name="first" value="{{first}}">
@@ -34,11 +34,11 @@
         <br>
         <br>
         <br>
-        {{!-- {{#if error}}
+        {{#if error}}
         <h3 id="errorMsg">{{errorMsg}}</h3>
         <br>
-        {{/if}} --}}
-        <button id="udpateProfile">UPDATE</button>
+        {{/if}}
+        <button class="otherButtons" id="udpateProfile">UPDATE</button>
     </form>
 
 </div>

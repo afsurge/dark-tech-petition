@@ -5,17 +5,17 @@
     <img id="signatureAdded" src="{{signature}}" alt="">
     <br>
     {{/signRows}}
+    <br>
+    <a class="allForms" href="/edit"><button class="allButtons">EDIT PROFILE</button></a>
+    <br>
+    <form class="allForms" method="POST">
+        <button class="allButtons" id="delSign">DELETE SIGNATURE</button>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </form>
+    <br>
+    <br>
     {{#totalRows}}
     <h2>Know about the valiant group of {{count}} <a href="/signers">here</a></h2>
     {{/totalRows}}
-    <br>
-    <br>
-    <a id="editButton" href="/edit">EDIT PROFILE</a>
-    <br>
-    <br>
-    <form method="POST">
-        <button id="delSign">DELETE SIGNATURE</button>
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    </form>
 </div>
 <div class="petitionBanner"></div>

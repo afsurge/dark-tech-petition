@@ -30,37 +30,41 @@ app.use(function (req, res, next) {
 
 app.use(express.static("./public"));
 
-// app.use((req, res, next) => {
-//     if (req.session.userId) {
-//         if (req.session.signatureId) {
-//             if (
-//                 req.url == "/petition" ||
-//                 req.url == "/register" ||
-//                 req.url == "/login"
-//             ) {
-//                 res.redirect("/thanks");
-//             } else {
-//                 return next();
-//             }
-//         } else {
-//             if (req.url != "/petition" && req.url != "/profile") {
-//                 res.redirect("/petition");
-//             } else {
-//                 return next();
-//             }
-//         }
-//     } else {
-//         if (
-//             req.url == "/register" ||
-//             req.url == "/login" ||
-//             req.url == "/profile"
-//         ) {
-//             return next();
-//         } else {
-//             res.redirect("/register");
-//         }
-//     }
-// });
+app.use((req, res, next) => {
+    if (req.session.userId) {
+        if (req.session.signatureId) {
+            if (
+                req.url == "/petition" ||
+                req.url == "/register" ||
+                req.url == "/login"
+            ) {
+                res.redirect("/thanks");
+            } else {
+                return next();
+            }
+        } else {
+            if (
+                req.url != "/petition" &&
+                req.url != "/profile" &&
+                req.url != "/logout"
+            ) {
+                res.redirect("/petition");
+            } else {
+                return next();
+            }
+        }
+    } else {
+        if (
+            req.url == "/register" ||
+            req.url == "/login" ||
+            req.url == "/profile"
+        ) {
+            return next();
+        } else {
+            res.redirect("/register");
+        }
+    }
+});
 
 // routes
 app.get("/", (req, res) => {
@@ -70,6 +74,7 @@ app.get("/", (req, res) => {
 app.get("/register", (req, res) => {
     res.render("register", {
         layout: "main",
+        loggedin: false,
     });
 });
 
@@ -84,11 +89,17 @@ app.post("/register", (req, res) => {
                 })
                 .catch((err) => {
                     console.log("Error:", err.message);
+                    if (err.message.includes("violates check constraint")) {
+                        var errorMsg =
+                            "ERROR: We did not get everything. Please try again.";
+                    } else if (err.message.includes("duplicate key")) {
+                        errorMsg =
+                            "ERROR: Sorry that email is already registered. Please try again.";
+                    }
                     res.render("register", {
                         layout: "main",
                         error: true,
-                        errorMsg:
-                            "ERROR: We didn't get everything, please try again.",
+                        errorMsg: errorMsg,
                     });
                 });
         })
@@ -100,6 +111,7 @@ app.post("/register", (req, res) => {
 app.get("/profile", (req, res) => {
     res.render("profile", {
         layout: "main",
+        loggedin: true,
     });
 });
 
@@ -108,9 +120,6 @@ app.post("/profile", (req, res) => {
     if (!url.startsWith("https://") && !url.startsWith("http://")) {
         url = "https://" + url;
     }
-    // if (age == "") {
-    //     age = null;
-    // }
     const user_id = req.session.userId;
     db.addProfile(age, city, url, user_id)
         .then(() => res.redirect("/petition"))
@@ -120,10 +129,11 @@ app.post("/profile", (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login", {
         layout: "main",
+        loggedin: false,
     });
 });
 
-// can use func for re-render 3x below
+// could use func for re-render 3x below
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     if (email == "" || password == "") {
@@ -172,6 +182,7 @@ app.post("/login", (req, res) => {
 app.get("/petition", (req, res) => {
     res.render("petition", {
         layout: "main",
+        loggedin: true,
     });
 });
 
@@ -212,6 +223,7 @@ app.get("/thanks", (req, res) => {
                     let signRows = rows;
                     res.render("thanks", {
                         layout: "main",
+                        loggedin: true,
                         signRows,
                         totalRows,
                     });
@@ -238,6 +250,7 @@ app.get("/signers", (req, res) => {
             // console.log(rows);
             res.render("signers", {
                 layout: "main",
+                loggedin: true,
                 rows,
             });
         })
@@ -254,6 +267,7 @@ app.get("/signers/:city", (req, res) => {
                 rows,
                 selectedCity: true,
                 city: city,
+                loggedin: true,
             });
         })
         .catch((err) => console.log("Error:", err.message));
@@ -265,6 +279,7 @@ app.get("/edit", (req, res) => {
             res.render("edit", {
                 layout: "main",
                 rows,
+                loggedin: true,
             });
         })
         .catch((err) => {
@@ -272,11 +287,14 @@ app.get("/edit", (req, res) => {
         });
 });
 
+// could use func for re-render 2x below (catch)
 app.post("/edit", (req, res) => {
-    const { first, last, email, password, age, city, url } = req.body;
+    let { first, last, email, password, age, city, url } = req.body;
 
     // re-render /edit from catch when an error occurs due to empty first/last/email
-
+    if (!url.startsWith("https://") && !url.startsWith("http://")) {
+        url = "https://" + url;
+    }
     if (password) {
         hash(password)
             .then((hashedpass) => {
@@ -303,6 +321,26 @@ app.post("/edit", (req, res) => {
             })
             .catch((err) => {
                 console.log("Error at update user:", err.message);
+
+                db.getProfile(req.session.userId)
+                    .then(({ rows }) => {
+                        if (err.message.includes("violates check constraint")) {
+                            var errorMsg =
+                                "ERROR: Names and email cannot be empty! Please try again.";
+                        } else if (err.message.includes("duplicate key")) {
+                            errorMsg =
+                                "ERROR: Sorry that email is already registered. Please try again.";
+                        }
+                        res.render("edit", {
+                            layout: "main",
+                            rows,
+                            error: true,
+                            errorMsg: errorMsg,
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("Error:", err.message);
+                    });
             });
     } else {
         db.updateUserNoPass(first, last, email, req.session.userId)
@@ -317,8 +355,32 @@ app.post("/edit", (req, res) => {
             })
             .catch((err) => {
                 console.log("Error at update user:", err.message);
+                db.getProfile(req.session.userId)
+                    .then(({ rows }) => {
+                        if (err.message.includes("violates check constraint")) {
+                            var errorMsg =
+                                "ERROR: Names and email cannot be empty! Please try again.";
+                        } else if (err.message.includes("duplicate key")) {
+                            errorMsg =
+                                "ERROR: Sorry that email is already registered. Please try again.";
+                        }
+                        res.render("edit", {
+                            layout: "main",
+                            rows,
+                            error: true,
+                            errorMsg: errorMsg,
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("Error:", err.message);
+                    });
             });
     }
+});
+
+app.get("/logout", (req, res) => {
+    req.session.userId = null;
+    res.redirect("/register");
 });
 
 // listen locally or in production

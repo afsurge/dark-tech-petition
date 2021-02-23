@@ -33,23 +33,32 @@ Part4 DONE:
     X - check signature at login to decide next -> /petition or /thanks
     X - error with adding no age -> "" is invalid as INT -> maybe check and pass null? -> Andrea tip
 
-Part5 pending (notes by Andrea):
+Part5 DONE (notes by Andrea):
     X - Edit user profile and delete signature
     X - GET for /edit -> new edit template -> retrieve and displate current info + csrf
     X - POST for /edit -> 2 new queries -> with or without new password
     X - Delete signature -> update sign cookie -> redirect /petition
     X - link to /edit
-    - check user updates with empty first, last, email -> Merle tip
+    X - check user updates for empty first, last, email -> Merle tip
 
 
 MISC:
     X - CSRF
     X - fix signature style and quality in /thanks -> script and styles
+    X - new user with already registered email not allowed -> separate error msg for empty fields/used email
+    X - edit user with already registered email in catch -> separate error msg for empty fields/used email
+    X - add clear button for signatures -> script.js
+    X - change <a> tags to buttons without form -> edit and clear buttons
+    X - add footer with quote
+    X - fix petition page alignment canvas, buttons
+    X - add logout -> req.session.userId = null -> Merle tip
+    X - add icon/logo
     - client-side styles, images, etc.
     - finalise text on all pages
-    - logout
-    - new user with already registered email should not be added -> catch error?
-    - add footer
+    - picture for remaining pages
+    - get rid of <br> ? -> Merle tip
+    - express router, route middleware if possible
+    - supertest exercises
 
 Questions!
 - When do we clear the userId cookie? Logout?

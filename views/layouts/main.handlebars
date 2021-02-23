@@ -4,18 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petition</title>
+    <title>STOP DARK TECH</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" type="image/jpg" href="../images/icon.png">
 </head>
 <body>
     <div id="navbar">
+        <div id="iconDiv">
+            <img id="icon" src="../images/icon.png" alt="logo">
+        </div>
         <a class="navbuttons" href="/register">REGISTER</a>
+        {{#if loggedin}}
+        <a class="navbuttons" href="/logout">LOGOUT</a>
+        {{else}}
         <a class="navbuttons" href="/login">LOGIN</a>
+        {{/if}}
         <a class="navbuttons" href="/petition">PETITION</a>
         <a class="navbuttons" href="/signers">SUPPORTERS</a>
     </div>
     <div id="container">
         {{{body}}}
     </div>
+    <footer>
+       <p class="footer">© Abrar @ Spiced Academy 2021</p> 
+       <p id="footerQuote" class="footer">"The technology that connects us...also controls us..."</p>
+    </footer>
 </body>
 </html>

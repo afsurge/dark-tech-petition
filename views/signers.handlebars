@@ -5,18 +5,20 @@
     <h1>The following people stands together against the exploitations of social media.</h1>
     {{/if}}
     <br>
+    <br>
     <div id="allSigners">
         {{#rows}}
             {{#if ../selectedCity}}
-            <h3>✔️ {{first}} {{last}} | {{age}} </h3>
+            <h3><|> {{first}} {{last}} | {{age}} </h3>
             <br>
             {{else if url}}
-            <h3>✔️ <a href="{{url}}" target="_blank">{{first}} {{last}}</a> | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
+            <h3><|> <a href="{{url}}" target="_blank">{{first}} {{last}}</a> | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
             <br>
             {{else}}
-            <h3>✔️ {{first}} {{last}} | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
+            <h3><|> {{first}} {{last}} | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
             <br>
             {{/if}}
         {{/rows}}
     </div>
 </div>
+<div class="signersBanner"></div>
