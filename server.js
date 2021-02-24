@@ -6,6 +6,10 @@ const db = require("./db");
 const { hash, compare } = require("./utils/bc.js");
 const csurf = require("csurf");
 
+// export for supertest
+module.exports.app = app;
+// export for supertest
+
 // handlebars setup
 app.engine("handlebars", exhbars());
 app.set("view engine", "handlebars");
@@ -384,6 +388,9 @@ app.get("/logout", (req, res) => {
 });
 
 // listen locally or in production
-app.listen(process.env.PORT || 8080, () =>
-    console.log("🛑 Petition server is running...")
-);
+// if-block: server does not fully run when running tests (supertest)
+if (require.main == module) {
+    app.listen(process.env.PORT || 8080, () =>
+        console.log("🛑 Petition server is running...")
+    );
+}
