@@ -13,6 +13,11 @@
         <div id="iconDiv">
             <img id="icon" src="../images/icon.png" alt="logo">
         </div>
+        {{!-- {{#if loggedin}}
+        {{#rows}}
+        <a class="navbuttons" href="#">Hello {{first}}! |</a>
+        {{/rows}}
+        {{/if}} --}}
         <a class="navbuttons" href="/register">REGISTER</a>
         {{#if loggedin}}
         <a class="navbuttons" href="/logout">LOGOUT</a>
@@ -25,9 +30,10 @@
     <div id="container">
         {{{body}}}
     </div>
-    <footer>
+    <div id="footer">
        <p class="footer">© Abrar @ Spiced Academy 2021</p> 
-       <p id="footerQuote" class="footer">"The technology that connects us...also controls us..."</p>
-    </footer>
+       <p id="footerQuote" class="footer">"The technology that connects us...also controls us"</p>
+    </div>
 </body>
+
 </html>

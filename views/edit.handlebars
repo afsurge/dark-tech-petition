@@ -1,45 +1,30 @@
 <div class="pageBody">
     <h2>Edit your profile</h2>
-    <br>
     <form class="otherForms" method="POST">
         {{#rows}}
         <p>first name</p>
         <input type="text" name="first" value="{{first}}">
-        <br>
-        <br>
         <p>last name</p>
         <input type="text" name="last" value="{{last}}">
-        <br>
-        <br>
         <p>email</p>
         <input type="text" name="email" value="{{email}}">
-        <br>
-        <br>
         <p>password</p>
         <input type="password" name="password">
-        <br>
-        <br>
         <p>age</p>
         <input type="text" name="age" value="{{age}}">
-        <br>
-        <br>
         <p>city</p>
         <input type="text" name="city" value="{{city}}">
-        <br>
-        <br>
         <p>homepage</p>
         <input type="text" name="url" value="{{url}}">
         {{/rows}}
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <br>
-        <br>
-        <br>
         {{#if error}}
-        <h3 id="errorMsg">{{errorMsg}}</h3>
-        <br>
+        <h3 class="errorMsg">{{errorMsg}}</h3>
         {{/if}}
+        <br>
         <button class="otherButtons" id="udpateProfile">UPDATE</button>
     </form>
-
+    <a class="allForms" href="/delete"><button class="allButtons">DELETE ACCOUNT</button></a>
 </div>
 <div class="pageBanner"></div>

@@ -1,24 +1,23 @@
 <div class="pageBody">
     {{#if selectedCity}}
-    <h1>The following people from "{{city}}" stands together against the exploitations of social media.</h1>
+    <h1 class="allSigners thanks">The following people from <span>{{city}}</span> stand together against the exploitations of social media.</h1>
     {{else}}
-    <h1>The following people stands together against the exploitations of social media.</h1>
+    <h1 class="allSigners thanks">The following people stand together against the exploitations of social media.</h1>
     {{/if}}
-    <br>
     <br>
     <div id="allSigners">
         {{#rows}}
             {{#if ../selectedCity}}
-            <h3><|> {{first}} {{last}} | {{age}} </h3>
-            <br>
+            <h3 class="allSigners"><|> {{first}} {{last}} | {{age}} </h3>
             {{else if url}}
-            <h3><|> <a href="{{url}}" target="_blank">{{first}} {{last}}</a> | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
-            <br>
+            <h3 class="allSigners"><|> <a class="allSigners" href="{{url}}" target="_blank">{{first}} {{last}}</a> | {{age}} | <a class="allSigners" href="/signers/{{city}}">{{city}}</a></h3>
             {{else}}
-            <h3><|> {{first}} {{last}} | {{age}} | <a href="/signers/{{city}}">{{city}}</a></h3>
-            <br>
+            <h3 class="allSigners"><|> {{first}} {{last}} | {{age}} | <a class="allSigners" href="/signers/{{city}}">{{city}}</a></h3>
             {{/if}}
         {{/rows}}
+        {{#if selectedCity}}
+        <a id="backSignersATag" href="/signers"><h3 id="backSignersH3">GO BACK</h3></a>
+        {{/if}}
     </div>
 </div>
 <div class="signersBanner"></div>

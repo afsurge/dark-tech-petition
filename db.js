@@ -144,3 +144,23 @@ module.exports.deleteSign = (id) => {
     const params = [id];
     return db.query(q, params);
 };
+
+module.exports.deleteProfile = (id) => {
+    const q = `
+    DELETE FROM user_profiles
+    WHERE user_id = $1
+    `;
+
+    const params = [id];
+    return db.query(q, params);
+};
+
+module.exports.deleteUser = (id) => {
+    const q = `
+    DELETE FROM users
+    WHERE id = $1
+    `;
+
+    const params = [id];
+    return db.query(q, params);
+};

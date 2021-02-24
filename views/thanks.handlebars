@@ -1,11 +1,8 @@
 <div class="pageBody">
-    <h1>Many thanks for your signature and support, you are awesome!</h1>
-    <br>
+    <h1 class="thanks">Many thanks for your signature and support, you are <span>awesome!</span></h1>
     {{#signRows}}
     <img id="signatureAdded" src="{{signature}}" alt="">
-    <br>
     {{/signRows}}
-    <br>
     <a class="allForms" href="/edit"><button class="allButtons">EDIT PROFILE</button></a>
     <br>
     <form class="allForms" method="POST">
@@ -15,7 +12,7 @@
     <br>
     <br>
     {{#totalRows}}
-    <h2>Know about the valiant group of {{count}} <a href="/signers">here</a></h2>
+    <h2>Know about the valiant group of {{count}} <a href="/signers"><span>supporters</span></a></h2>
     {{/totalRows}}
 </div>
 <div class="petitionBanner"></div>

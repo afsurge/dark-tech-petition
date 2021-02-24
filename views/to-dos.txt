@@ -53,12 +53,16 @@ MISC:
     X - fix petition page alignment canvas, buttons
     X - add logout -> req.session.userId = null -> Merle tip
     X - add icon/logo
-    - client-side styles, images, etc.
-    - finalise text on all pages
-    - picture for remaining pages
-    - get rid of <br> ? -> Merle tip
+    X - finalise text on all pages
+    X - get rid of <br> ? -> Merle tip
+    X - supertest exercises
+    X - client-side styles, images, etc.
+    X - picture for remaining pages
+    X - delete complete account
+    - deploy Heroku
     - express router, route middleware if possible
-    - supertest exercises
+
 
 Questions!
-- When do we clear the userId cookie? Logout?
+X - When do we clear the userId cookie? Logout?
+    

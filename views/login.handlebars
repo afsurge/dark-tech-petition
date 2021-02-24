@@ -1,23 +1,19 @@
 <div class="pageBody">
     <h1>RISE AGAINST THE DARK TECHNOLOGY</h1>
     <br>
-    <h2>Please login</h2>
     <br>
+    <h2>Please login</h2>
     <form class="otherForms" method="POST">
         <p>email</p>
         <input type="text" name="email">
-        <br>
-        <br>
         <p>password</p>
         <input type="password" name="password">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <br>
-        <br>
-        <br>
         {{#if error}}
-        <h3 id="errorMsg">{{errorMsg}}</h3>
-        <br>
+        <h3 class="errorMsg">{{errorMsg}}</h3>
         {{/if}}
+        <br>
         <button class="otherButtons" id="login">LOGIN</button>
     </form>
 </div>

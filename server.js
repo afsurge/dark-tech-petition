@@ -6,6 +6,10 @@ const db = require("./db");
 const { hash, compare } = require("./utils/bc.js");
 const csurf = require("csurf");
 
+// redis
+const redis = require("./redis");
+// redis
+
 // export for supertest
 module.exports.app = app;
 // export for supertest
@@ -70,6 +74,30 @@ app.use((req, res, next) => {
     }
 });
 
+// redis routes
+app.get("/fun-with-redis", (req, res) => {
+    redis
+        .setex(
+            "dog",
+            10,
+            JSON.stringify({
+                name: "shadow",
+                breed: "husky",
+            })
+        )
+        .then(() => res.redirect("/get-from-redis"))
+        .catch((err) => console.log("err in setex:", err));
+});
+
+app.get("/get-from-redis", (req, res) => {
+    redis.get("dog").then((data) => {
+        console.log("preparsed data:", data);
+        console.log("data from redis:", JSON.parse(data));
+        res.sendStatus(200);
+    });
+});
+// redis routes
+
 // routes
 app.get("/", (req, res) => {
     res.redirect("/register");
@@ -84,8 +112,21 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
     const { first, last, email, password } = req.body;
+    // console.log(req.body);
+    // console.log(password);
+    if (password == "") {
+        let errNoPass =
+            "ERROR: You did not provide a password, please try again.";
+        return res.render("register", {
+            layout: "main",
+            error: true,
+            loggedin: false,
+            errorMsg: errNoPass,
+        });
+    }
     hash(password)
         .then((hashedpass) => {
+            // console.log(hashedpass);
             db.addUser(first, last, email, hashedpass)
                 .then(({ rows }) => {
                     req.session.userId = rows[0].id;
@@ -339,6 +380,7 @@ app.post("/edit", (req, res) => {
                             layout: "main",
                             rows,
                             error: true,
+                            loggedin: true,
                             errorMsg: errorMsg,
                         });
                     })
@@ -372,6 +414,7 @@ app.post("/edit", (req, res) => {
                             layout: "main",
                             rows,
                             error: true,
+                            loggedin: true,
                             errorMsg: errorMsg,
                         });
                     })
@@ -383,8 +426,30 @@ app.post("/edit", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    req.session.userId = null;
+    // req.session.userId = null;
+    // req.session.signatureId = null;
+    req.session = null;
     res.redirect("/register");
+});
+
+app.get("/delete", (req, res) => {
+    db.deleteSign(req.session.userId)
+        .then(() => {
+            db.deleteProfile(req.session.userId)
+                .then(() => {
+                    db.deleteUser(req.session.userId)
+                        .then(() => {
+                            res.redirect("/logout");
+                        })
+                        .catch((err) => {
+                            console.log("Error with user delete:", err.message);
+                        });
+                })
+                .catch((err) =>
+                    console.log("Error with profile delete:", err.message)
+                );
+        })
+        .catch((err) => console.log("Error with sign delete:", err.message));
 });
 
 // listen locally or in production
