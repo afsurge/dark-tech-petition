@@ -59,8 +59,10 @@ MISC:
     X - client-side styles, images, etc.
     X - picture for remaining pages
     X - delete complete account
-    - deploy Heroku
+    X - deploy Heroku
     - express router, route middleware if possible
+    - set range for age input
+    - responsive!
 
 
 Questions!

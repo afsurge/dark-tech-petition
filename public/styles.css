@@ -5,12 +5,15 @@
 }
 
 body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     background-color: dimgray;
 }
 
 #container {
     display: flex;
-    height: 90vh;
+    flex-grow: 2;
 }
 
 div#navbar {
@@ -133,9 +136,8 @@ input {
     margin: 5px 0px;
 }
 
-div#footer {
+#footer {
     display: flex;
-    width: 100%;
     background-color: #292929;
     color: whitesmoke;
     align-items: center;
@@ -150,6 +152,7 @@ div#footer {
 }
 
 #footerQuote {
+    width: 100%;
     color: #e33b38;
     font-style: italic;
     text-align: right;
@@ -207,4 +210,105 @@ h1.thanks {
 #backSignersH3 {
     color: #e33b38;
     text-align: left;
+}
+
+@media screen and (max-width: 550px) {
+    div#navbar {
+        height: 50px;
+    }
+
+    .navbuttons {
+        font-size: 1em;
+        padding: 20px 5px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+
+    p,
+    input {
+        font-size: 1em;
+    }
+
+    .otherForms {
+        padding: 10px 0px;
+    }
+
+    button {
+        font-size: 1.4em;
+    }
+
+    .allButtons {
+        font-size: 1.2em;
+    }
+
+    #petitionMsg {
+        margin: 10px 0px;
+    }
+
+    #container {
+        height: 120vh;
+    }
+
+    #footer {
+        height: 60px;
+    }
+
+    .footer,
+    #footerQuote {
+        height: 50%;
+        padding: 0px;
+    }
+
+    .errorMsg {
+        margin: 10px 0px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .pageBody,
+    .pageBanner,
+    .petitionBanner,
+    .signersBanner {
+        width: 100%;
+        height: 100%;
+    }
+
+    .signersBanner {
+        background-size: cover;
+    }
+
+    #container {
+        flex-direction: column;
+        height: 140vh;
+    }
+
+    #footer {
+        flex-direction: column;
+    }
+
+    .footer,
+    #footerQuote {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .pageBody {
+        padding: 10px;
+    }
+
+    .footer,
+    #footerQuote {
+        font-size: 1em;
+    }
 }
