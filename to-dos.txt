@@ -9,9 +9,9 @@ Part2 DONE (notes by Merle):
     X - add cookie-session 
 
 CSRF DONE:
-    - step-by-step in notes
-    - for forms with POST input element -> petition, later also for login and others
-    - can do after part5 but before going online!
+    X - step-by-step in notes
+    X - for forms with POST input element -> petition, later also for login and others
+    X - can do after part5 but before going online!
 
 Part3 DONE (notes by Oli):
     X - database tables
@@ -60,9 +60,11 @@ MISC:
     X - picture for remaining pages
     X - delete complete account
     X - deploy Heroku
+    X - responsive!
     - express router, route middleware if possible
     - set range for age input
-    - responsive!
+    - modify sign canvas and render for responsive
+    - replace vw/vh with px values for non-responsive
 
 
 Questions!
