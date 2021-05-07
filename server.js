@@ -165,6 +165,14 @@ app.post("/profile", (req, res) => {
     if (!url.startsWith("https://") && !url.startsWith("http://")) {
         url = "https://" + url;
     }
+    if (age < 18 || age > 100) {
+        let errAge = "ERROR: Invalid age (18 and above).";
+        return res.render("profile", {
+            layout: "main",
+            error: true,
+            errorMsg: errAge,
+        });
+    }
     const user_id = req.session.userId;
     db.addProfile(age, city, url, user_id)
         .then(() => res.redirect("/petition"))
@@ -340,94 +348,124 @@ app.post("/edit", (req, res) => {
     if (!url.startsWith("https://") && !url.startsWith("http://")) {
         url = "https://" + url;
     }
-    if (password) {
-        hash(password)
-            .then((hashedpass) => {
-                db.updateUserWithPass(
-                    first,
-                    last,
-                    email,
-                    hashedpass,
-                    req.session.userId
-                )
-                    .then(() => {
-                        db.upsertProfile(
-                            age,
-                            city,
-                            url,
-                            req.session.userId
-                        ).then(() => {
-                            res.redirect("/petition");
-                        });
-                    })
-                    .catch((err) => {
-                        console.log("Error at with pass upsert:", err.message);
-                    });
+
+    if (age < 18 || age > 100) {
+        let errAge = "ERROR: Invalid age (18 and above).";
+        db.getProfile(req.session.userId)
+            .then(({ rows }) => {
+                res.render("edit", {
+                    layout: "main",
+                    rows,
+                    loggedin: true,
+                    errorAge: true,
+                    errorAgeMsg: errAge,
+                });
             })
             .catch((err) => {
-                console.log("Error at update user:", err.message);
-
-                db.getProfile(req.session.userId)
-                    .then(({ rows }) => {
-                        if (err.message.includes("violates check constraint")) {
-                            var errorMsg =
-                                "ERROR: Names and email cannot be empty! Please try again.";
-                        } else if (err.message.includes("duplicate key")) {
-                            errorMsg =
-                                "ERROR: Sorry that email is already registered. Please try again.";
-                        }
-                        res.render("edit", {
-                            layout: "main",
-                            rows,
-                            error: true,
-                            loggedin: true,
-                            errorMsg: errorMsg,
-                        });
-                    })
-                    .catch((err) => {
-                        console.log("Error:", err.message);
-                    });
+                console.log("Error:", err.message);
             });
     } else {
-        db.updateUserNoPass(first, last, email, req.session.userId)
-            .then(() => {
-                db.upsertProfile(age, city, url, req.session.userId)
-                    .then(() => {
-                        res.redirect("/petition");
-                    })
-                    .catch((err) => {
-                        console.log("Error at no pass upsert:", err.message);
-                    });
-            })
-            .catch((err) => {
-                console.log("Error at update user:", err.message);
-                db.getProfile(req.session.userId)
-                    .then(({ rows }) => {
-                        if (err.message.includes("violates check constraint")) {
-                            var errorMsg =
-                                "ERROR: Names and email cannot be empty! Please try again.";
-                        } else if (err.message.includes("duplicate key")) {
-                            errorMsg =
-                                "ERROR: Sorry that email is already registered. Please try again.";
-                        }
-                        res.render("edit", {
-                            layout: "main",
-                            rows,
-                            error: true,
-                            loggedin: true,
-                            errorMsg: errorMsg,
+        if (password) {
+            hash(password)
+                .then((hashedpass) => {
+                    db.updateUserWithPass(
+                        first,
+                        last,
+                        email,
+                        hashedpass,
+                        req.session.userId
+                    )
+                        .then(() => {
+                            db.upsertProfile(
+                                age,
+                                city,
+                                url,
+                                req.session.userId
+                            ).then(() => {
+                                res.redirect("/petition");
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(
+                                "Error at with pass upsert:",
+                                err.message
+                            );
                         });
-                    })
-                    .catch((err) => {
-                        console.log("Error:", err.message);
-                    });
-            });
+                })
+                .catch((err) => {
+                    console.log("Error at update user:", err.message);
+
+                    db.getProfile(req.session.userId)
+                        .then(({ rows }) => {
+                            if (
+                                err.message.includes(
+                                    "violates check constraint"
+                                )
+                            ) {
+                                var errorMsg =
+                                    "ERROR: Names and email cannot be empty! Please try again.";
+                            } else if (err.message.includes("duplicate key")) {
+                                errorMsg =
+                                    "ERROR: Sorry that email is already registered. Please try again.";
+                            }
+                            res.render("edit", {
+                                layout: "main",
+                                rows,
+                                error: true,
+                                loggedin: true,
+                                errorMsg: errorMsg,
+                            });
+                        })
+                        .catch((err) => {
+                            console.log("Error:", err.message);
+                        });
+                });
+        } else {
+            db.updateUserNoPass(first, last, email, req.session.userId)
+                .then(() => {
+                    db.upsertProfile(age, city, url, req.session.userId)
+                        .then(() => {
+                            res.redirect("/petition");
+                        })
+                        .catch((err) => {
+                            console.log(
+                                "Error at no pass upsert:",
+                                err.message
+                            );
+                        });
+                })
+                .catch((err) => {
+                    console.log("Error at update user:", err.message);
+                    db.getProfile(req.session.userId)
+                        .then(({ rows }) => {
+                            if (
+                                err.message.includes(
+                                    "violates check constraint"
+                                )
+                            ) {
+                                var errorMsg =
+                                    "ERROR: Names and email cannot be empty! Please try again.";
+                            } else if (err.message.includes("duplicate key")) {
+                                errorMsg =
+                                    "ERROR: Sorry that email is already registered. Please try again.";
+                            }
+                            res.render("edit", {
+                                layout: "main",
+                                rows,
+                                error: true,
+                                loggedin: true,
+                                errorMsg: errorMsg,
+                            });
+                        })
+                        .catch((err) => {
+                            console.log("Error:", err.message);
+                        });
+                });
+        }
     }
 });
 
 app.get("/logout", (req, res) => {
-    // req.session.userId = null;
-    // req.session.signatureId = null;
     req.session = null;
     res.redirect("/register");
 });

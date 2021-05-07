@@ -10,7 +10,7 @@
         <input type="text" name="email" value="{{email}}">
         <p>password</p>
         <input type="password" name="password">
-        <p>age</p>
+        <p>age (18 and above)</p>
         <input type="text" name="age" value="{{age}}">
         <p>city</p>
         <input type="text" name="city" value="{{city}}">
@@ -21,6 +21,10 @@
         <br>
         {{#if error}}
         <h3 class="errorMsg">{{errorMsg}}</h3>
+        {{/if}}
+        <br>
+        {{#if errorAge}}
+        <h3 class="errorMsg">{{errorAgeMsg}}</h3>
         {{/if}}
         <br>
         <button class="otherButtons" id="udpateProfile">UPDATE</button>

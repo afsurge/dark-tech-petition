@@ -4,7 +4,7 @@
     <br>
     <h2>Please provide (optional) information</h2>
     <form class="otherForms" method="POST">
-        <p>age</p>
+        <p>age (18 and above)</p>
         <input type="text" name="age">
         <p>city</p>
         <input type="text" name="city">
@@ -12,6 +12,9 @@
         <input type="text" name="url">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <br>
+        {{#if error}}
+        <h3 class="errorMsg">{{errorMsg}}</h3>
+        {{/if}}
         <br>
         <button class="otherButtons" id="addProfile">CONTINUE</button>
     </form>
