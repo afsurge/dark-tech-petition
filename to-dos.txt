@@ -62,9 +62,10 @@ MISC:
     X - deploy Heroku
     X - responsive!
     X - set range for age input
-    - express router, route middleware if possible
     - DRY up
+    - fix responsive right image with scroll
     - modify sign canvas and render for responsive
+    - express router, route middleware if possible
     - replace vw/vh with px values for non-responsive
 
 
