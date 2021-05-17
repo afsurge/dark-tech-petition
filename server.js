@@ -98,6 +98,40 @@ app.get("/get-from-redis", (req, res) => {
 });
 // redis routes
 
+// function to re-use db.getProfile
+function getProfileFunc(id, res, errorMsg) {
+    db.getProfile(id)
+        .then(({ rows }) => {
+            if (errorMsg == "ERROR: Invalid age (18 and above).") {
+                res.render("edit", {
+                    layout: "main",
+                    rows,
+                    loggedin: true,
+                    errorAge: true,
+                    errorAgeMsg: errorMsg,
+                });
+            } else if (errorMsg) {
+                res.render("edit", {
+                    layout: "main",
+                    rows,
+                    loggedin: true,
+                    error: true,
+                    errorMsg: errorMsg,
+                });
+            } else {
+                res.render("edit", {
+                    layout: "main",
+                    rows,
+                    loggedin: true,
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("Error:", err.message);
+        });
+}
+// function to re-use db.getProfile
+
 // routes
 app.get("/", (req, res) => {
     res.redirect("/register");
@@ -327,17 +361,19 @@ app.get("/signers/:city", (req, res) => {
 });
 
 app.get("/edit", (req, res) => {
-    db.getProfile(req.session.userId)
-        .then(({ rows }) => {
-            res.render("edit", {
-                layout: "main",
-                rows,
-                loggedin: true,
-            });
-        })
-        .catch((err) => {
-            console.log("Error:", err.message);
-        });
+    getProfileFunc(req.session.userId, res);
+
+    //     db.getProfile(req.session.userId)
+    //         .then(({ rows }) => {
+    //             res.render("edit", {
+    //                 layout: "main",
+    //                 rows,
+    //                 loggedin: true,
+    //             });
+    //         })
+    //         .catch((err) => {
+    //             console.log("Error:", err.message);
+    //         });
 });
 
 // could use func for re-render 2x below (catch)
@@ -350,20 +386,23 @@ app.post("/edit", (req, res) => {
     }
 
     if (age < 18 || age > 100) {
-        let errAge = "ERROR: Invalid age (18 and above).";
-        db.getProfile(req.session.userId)
-            .then(({ rows }) => {
-                res.render("edit", {
-                    layout: "main",
-                    rows,
-                    loggedin: true,
-                    errorAge: true,
-                    errorAgeMsg: errAge,
-                });
-            })
-            .catch((err) => {
-                console.log("Error:", err.message);
-            });
+        let errorAgeMsg = "ERROR: Invalid age (18 and above).";
+
+        getProfileFunc(req.session.userId, res, errorAgeMsg);
+
+        // db.getProfile(req.session.userId)
+        //     .then(({ rows }) => {
+        //         res.render("edit", {
+        //             layout: "main",
+        //             rows,
+        //             loggedin: true,
+        //             errorAge: true,
+        //             errorAgeMsg: errorAgeMsg,
+        //         });
+        //     })
+        //     .catch((err) => {
+        //         console.log("Error:", err.message);
+        //     });
     } else {
         if (password) {
             hash(password)
@@ -394,31 +433,31 @@ app.post("/edit", (req, res) => {
                 })
                 .catch((err) => {
                     console.log("Error at update user:", err.message);
+                    var errorMsg;
 
-                    db.getProfile(req.session.userId)
-                        .then(({ rows }) => {
-                            if (
-                                err.message.includes(
-                                    "violates check constraint"
-                                )
-                            ) {
-                                var errorMsg =
-                                    "ERROR: Names and email cannot be empty! Please try again.";
-                            } else if (err.message.includes("duplicate key")) {
-                                errorMsg =
-                                    "ERROR: Sorry that email is already registered. Please try again.";
-                            }
-                            res.render("edit", {
-                                layout: "main",
-                                rows,
-                                error: true,
-                                loggedin: true,
-                                errorMsg: errorMsg,
-                            });
-                        })
-                        .catch((err) => {
-                            console.log("Error:", err.message);
-                        });
+                    if (err.message.includes("violates check constraint")) {
+                        errorMsg =
+                            "ERROR: Names and email cannot be empty! Please try again.";
+                    } else if (err.message.includes("duplicate key")) {
+                        errorMsg =
+                            "ERROR: Sorry that email is already registered. Please try again.";
+                    }
+
+                    getProfileFunc(req.session.userId, res, errorMsg);
+
+                    // db.getProfile(req.session.userId)
+                    //     .then(({ rows }) => {
+                    //         res.render("edit", {
+                    //             layout: "main",
+                    //             rows,
+                    //             loggedin: true,
+                    //             error: true,
+                    //             errorMsg: errorMsg,
+                    //         });
+                    //     })
+                    //     .catch((err) => {
+                    //         console.log("Error:", err.message);
+                    //     });
                 });
         } else {
             db.updateUserNoPass(first, last, email, req.session.userId)
@@ -436,30 +475,32 @@ app.post("/edit", (req, res) => {
                 })
                 .catch((err) => {
                     console.log("Error at update user:", err.message);
-                    db.getProfile(req.session.userId)
-                        .then(({ rows }) => {
-                            if (
-                                err.message.includes(
-                                    "violates check constraint"
-                                )
-                            ) {
-                                var errorMsg =
-                                    "ERROR: Names and email cannot be empty! Please try again.";
-                            } else if (err.message.includes("duplicate key")) {
-                                errorMsg =
-                                    "ERROR: Sorry that email is already registered. Please try again.";
-                            }
-                            res.render("edit", {
-                                layout: "main",
-                                rows,
-                                error: true,
-                                loggedin: true,
-                                errorMsg: errorMsg,
-                            });
-                        })
-                        .catch((err) => {
-                            console.log("Error:", err.message);
-                        });
+
+                    var errorMsg;
+
+                    if (err.message.includes("violates check constraint")) {
+                        errorMsg =
+                            "ERROR: Names and email cannot be empty! Please try again.";
+                    } else if (err.message.includes("duplicate key")) {
+                        errorMsg =
+                            "ERROR: Sorry that email is already registered. Please try again.";
+                    }
+
+                    getProfileFunc(req.session.userId, res, errorMsg);
+
+                    // db.getProfile(req.session.userId)
+                    //     .then(({ rows }) => {
+                    //         res.render("edit", {
+                    //             layout: "main",
+                    //             rows,
+                    //             loggedin: true,
+                    //             error: true,
+                    //             errorMsg: errorMsg,
+                    //         });
+                    //     })
+                    //     .catch((err) => {
+                    //         console.log("Error:", err.message);
+                    //     });
                 });
         }
     }
