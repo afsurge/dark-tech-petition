@@ -147,6 +147,7 @@ function handleCatchesInEditPost(err) {
 
     return errorMsgInFunc;
 }
+// function to handle catch in /edit post route
 
 // routes
 app.get("/", (req, res) => {
@@ -381,7 +382,7 @@ app.get("/edit", (req, res) => {
     getProfileFunc(req.session.userId, res);
 });
 
-// could use func for re-render 2x below (catch)
+// could use func for re-render 2x below (catch) -> DONE
 app.post("/edit", (req, res) => {
     let { first, last, email, password, age, city, url } = req.body;
 
