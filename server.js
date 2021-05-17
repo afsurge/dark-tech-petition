@@ -132,6 +132,22 @@ function getProfileFunc(id, res, errorMsg) {
 }
 // function to re-use db.getProfile
 
+// function to handle catch in /edit post route
+function handleCatchesInEditPost(err) {
+    console.log("Error at update user:", err.message);
+    var errorMsgInFunc;
+
+    if (err.message.includes("violates check constraint")) {
+        errorMsgInFunc =
+            "ERROR: Names and email cannot be empty! Please try again.";
+    } else if (err.message.includes("duplicate key")) {
+        errorMsgInFunc =
+            "ERROR: Sorry that email is already registered. Please try again.";
+    }
+
+    return errorMsgInFunc;
+}
+
 // routes
 app.get("/", (req, res) => {
     res.redirect("/register");
@@ -361,19 +377,8 @@ app.get("/signers/:city", (req, res) => {
 });
 
 app.get("/edit", (req, res) => {
+    // re-usable func call
     getProfileFunc(req.session.userId, res);
-
-    //     db.getProfile(req.session.userId)
-    //         .then(({ rows }) => {
-    //             res.render("edit", {
-    //                 layout: "main",
-    //                 rows,
-    //                 loggedin: true,
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             console.log("Error:", err.message);
-    //         });
 });
 
 // could use func for re-render 2x below (catch)
@@ -387,22 +392,8 @@ app.post("/edit", (req, res) => {
 
     if (age < 18 || age > 100) {
         let errorAgeMsg = "ERROR: Invalid age (18 and above).";
-
+        // re-usable func call
         getProfileFunc(req.session.userId, res, errorAgeMsg);
-
-        // db.getProfile(req.session.userId)
-        //     .then(({ rows }) => {
-        //         res.render("edit", {
-        //             layout: "main",
-        //             rows,
-        //             loggedin: true,
-        //             errorAge: true,
-        //             errorAgeMsg: errorAgeMsg,
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         console.log("Error:", err.message);
-        //     });
     } else {
         if (password) {
             hash(password)
@@ -432,32 +423,10 @@ app.post("/edit", (req, res) => {
                         });
                 })
                 .catch((err) => {
-                    console.log("Error at update user:", err.message);
-                    var errorMsg;
+                    var errorMsg = handleCatchesInEditPost(err);
 
-                    if (err.message.includes("violates check constraint")) {
-                        errorMsg =
-                            "ERROR: Names and email cannot be empty! Please try again.";
-                    } else if (err.message.includes("duplicate key")) {
-                        errorMsg =
-                            "ERROR: Sorry that email is already registered. Please try again.";
-                    }
-
+                    // re-usable func call
                     getProfileFunc(req.session.userId, res, errorMsg);
-
-                    // db.getProfile(req.session.userId)
-                    //     .then(({ rows }) => {
-                    //         res.render("edit", {
-                    //             layout: "main",
-                    //             rows,
-                    //             loggedin: true,
-                    //             error: true,
-                    //             errorMsg: errorMsg,
-                    //         });
-                    //     })
-                    //     .catch((err) => {
-                    //         console.log("Error:", err.message);
-                    //     });
                 });
         } else {
             db.updateUserNoPass(first, last, email, req.session.userId)
@@ -474,33 +443,10 @@ app.post("/edit", (req, res) => {
                         });
                 })
                 .catch((err) => {
-                    console.log("Error at update user:", err.message);
+                    var errorMsg = handleCatchesInEditPost(err);
 
-                    var errorMsg;
-
-                    if (err.message.includes("violates check constraint")) {
-                        errorMsg =
-                            "ERROR: Names and email cannot be empty! Please try again.";
-                    } else if (err.message.includes("duplicate key")) {
-                        errorMsg =
-                            "ERROR: Sorry that email is already registered. Please try again.";
-                    }
-
+                    // re-usable func call
                     getProfileFunc(req.session.userId, res, errorMsg);
-
-                    // db.getProfile(req.session.userId)
-                    //     .then(({ rows }) => {
-                    //         res.render("edit", {
-                    //             layout: "main",
-                    //             rows,
-                    //             loggedin: true,
-                    //             error: true,
-                    //             errorMsg: errorMsg,
-                    //         });
-                    //     })
-                    //     .catch((err) => {
-                    //         console.log("Error:", err.message);
-                    //     });
                 });
         }
     }
