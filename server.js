@@ -98,7 +98,7 @@ app.get("/get-from-redis", (req, res) => {
 });
 // redis routes
 
-// function to re-use db.getProfile
+// func to re-use db.getProfile
 function getProfileFunc(id, res, errorMsg) {
     db.getProfile(id)
         .then(({ rows }) => {
@@ -130,9 +130,9 @@ function getProfileFunc(id, res, errorMsg) {
             console.log("Error:", err.message);
         });
 }
-// function to re-use db.getProfile
+// func to re-use db.getProfile
 
-// function to handle catch in /edit post route
+// func to handle catch in /edit post route
 function handleCatchesInEditPost(err) {
     console.log("Error at update user:", err.message);
     var errorMsgInFunc;
@@ -147,7 +147,7 @@ function handleCatchesInEditPost(err) {
 
     return errorMsgInFunc;
 }
-// function to handle catch in /edit post route
+// func to handle catch in /edit post route
 
 // routes
 app.get("/", (req, res) => {
