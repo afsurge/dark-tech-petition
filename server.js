@@ -98,7 +98,8 @@ app.get("/get-from-redis", (req, res) => {
 });
 // redis routes
 
-// func to re-use db.getProfile
+//// re-usable functions
+// db.getProfile
 function getProfileFunc(id, res, errorMsg) {
     db.getProfile(id)
         .then(({ rows }) => {
@@ -130,9 +131,8 @@ function getProfileFunc(id, res, errorMsg) {
             console.log("Error:", err.message);
         });
 }
-// func to re-use db.getProfile
 
-// func to handle catch in /edit post route
+// handle catch in /edit post
 function handleCatchesInEditPost(err) {
     console.log("Error at update user:", err.message);
     var errorMsgInFunc;
@@ -147,7 +147,16 @@ function handleCatchesInEditPost(err) {
 
     return errorMsgInFunc;
 }
-// func to handle catch in /edit post route
+
+// re-render in /login post
+function renderForErrors(res, msg) {
+    return res.render("login", {
+        layout: "main",
+        error: true,
+        errorMsg: msg,
+    });
+}
+//// re-usable functions
 
 // routes
 app.get("/", (req, res) => {
@@ -237,15 +246,14 @@ app.get("/login", (req, res) => {
     });
 });
 
-// could use func for re-render 3x below
+// could use func for re-render 3x below -> DONE
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
     if (email == "" || password == "") {
-        return res.render("login", {
-            layout: "main",
-            error: true,
-            errorMsg: "ERROR: Please provide both EMAIL and PASSWORD.",
-        });
+        return renderForErrors(
+            res,
+            "ERROR: Please provide both EMAIL and PASSWORD."
+        );
     }
 
     db.getUser(email)
@@ -265,21 +273,13 @@ app.post("/login", (req, res) => {
                         res.redirect("/thanks");
                     }
                 } else {
-                    return res.render("login", {
-                        layout: "main",
-                        error: true,
-                        errorMsg: "Wrong PASSWORD! Please try again.",
-                    });
+                    renderForErrors(res, "Wrong PASSWORD! Please try again.");
                 }
             });
         })
         .catch((err) => {
             console.log("Error:", err.message);
-            return res.render("login", {
-                layout: "main",
-                error: true,
-                errorMsg: "Invalid EMAIL. Please try again.",
-            });
+            renderForErrors(res, "Invalid EMAIL. Please try again.");
         });
 });
 
@@ -458,6 +458,7 @@ app.get("/logout", (req, res) => {
     res.redirect("/register");
 });
 
+// delete profile and sign
 app.get("/delete", (req, res) => {
     db.deleteSign(req.session.userId)
         .then(() => {
