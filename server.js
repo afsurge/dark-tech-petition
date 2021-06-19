@@ -368,10 +368,10 @@ app.get("/signers/:city", (req, res) => {
         .then(({ rows }) => {
             res.render("signers", {
                 layout: "main",
+                loggedin: true,
                 rows,
                 selectedCity: true,
                 city: city,
-                loggedin: true,
             });
         })
         .catch((err) => console.log("Error:", err.message));

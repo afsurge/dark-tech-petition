@@ -28,7 +28,7 @@ module.exports.addUser = (first, last, email, hashpass) => {
 };
 
 // have to cross-check with signatures table (JOIN)
-// only names of users who gave signatures
+// only names and profiles of users who gave signatures
 module.exports.getSigners = () => {
     const q = `
     SELECT users.first, users.last, user_profiles.age, user_profiles.city, user_profiles.url 
@@ -41,6 +41,7 @@ module.exports.getSigners = () => {
     return db.query(q);
 };
 
+// LOWER used in query to make case insensitive: Berlin, BERLIN, berlin, etc.
 module.exports.getSignersByCity = (city) => {
     const q = `
     SELECT users.first, users.last, user_profiles.age, user_profiles.city, user_profiles.url 
@@ -68,7 +69,7 @@ module.exports.getSignature = (id) => {
 
 // check if user logging in already signed (JOIN)
 // then go to /thanks directly
-// Joined table with id from both users, signatures
+// joined table with id from both users, signatures
 // users.id for req.session.userId
 // signatures.id for req.session.signatureId
 module.exports.getUser = (email) => {

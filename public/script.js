@@ -1,3 +1,5 @@
+// using canvas for signature data
+// from MDN example
 let draw = false;
 let x = 0;
 let y = 0;
