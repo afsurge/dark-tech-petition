@@ -387,6 +387,7 @@ app.post("/edit", (req, res) => {
     let { first, last, email, password, age, city, url } = req.body;
 
     // re-render /edit from catch when an error occurs due to empty first/last/email
+
     if (!url.startsWith("https://") && !url.startsWith("http://")) {
         url = "https://" + url;
     }
@@ -459,6 +460,7 @@ app.get("/logout", (req, res) => {
 });
 
 // delete profile and sign
+// could use Promises.all below for deleting sign, profile, user
 app.get("/delete", (req, res) => {
     db.deleteSign(req.session.userId)
         .then(() => {
